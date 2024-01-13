@@ -7,6 +7,11 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D playerRB;
     Animator playerAnimator;
     public float moveSpeed = 1f;
+    public float jumpSpeed = 1f,jumpFrequency =1f,nextJumpTime;
+    public bool isGrounded = false;
+    public Transform groundCheckPosition;
+    public float groundCheckRadius;
+    public LayerMask groundCheckLayer;
 
     bool facingRight = true;
 
@@ -21,6 +26,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         HorizontalMove();
+        OnGroundCheck();
         if (playerRB.velocity.x < 0 && facingRight)
         {
             FlipFace();
@@ -29,11 +35,18 @@ public class PlayerController : MonoBehaviour
         {
             FlipFace();
         }
+
+        if (Input.GetAxis("Vertical") > 0 && isGrounded &&(nextJumpTime <   Time.timeSinceLevelLoad))
+        {
+            nextJumpTime = Time.timeSinceLevelLoad + jumpFrequency;
+            Jump();
+        }
     }
 
     void FixedUpdate()
     {
-        // FixedUpdate içinde herhangi bir þey yapmýyorsanýz, bu metodun kaldýrýlabilir.
+        OnGroundCheck(); // Zemin kontrolü, genellikle FixedUpdate içinde yapýlýr.
+        // Buraya fiziksel güncellemeleri ekleyebilirsiniz, örneðin karakterin hareketini sabitlemek için.
     }
 
     void HorizontalMove()
@@ -48,5 +61,16 @@ public class PlayerController : MonoBehaviour
         Vector3 tempLocalScale = transform.localScale;
         tempLocalScale.x *= -1;
         transform.localScale = tempLocalScale;
+    }
+
+    void Jump()
+    {
+        playerRB.AddForce(new Vector2(0f, jumpSpeed));
+    }
+
+    void OnGroundCheck()
+    {
+        isGrounded = Physics2D.OverlapCircle(groundCheckPosition.position, groundCheckRadius, groundCheckLayer);
+        playerAnimator.SetBool("isGroundedAnim",isGrounded);
     }
 }
