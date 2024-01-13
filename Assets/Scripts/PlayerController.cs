@@ -4,20 +4,31 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-
-    Rigidbody2D playerRB; // Doðru yazým: "Rigidbody2D"
+    Rigidbody2D playerRB;
+    Animator playerAnimator;
     public float moveSpeed = 1f;
+
+    bool facingRight = true;
 
     // Start is called before the first frame update
     void Start()
     {
-        playerRB = GetComponent<Rigidbody2D>(); // "Rigidbody2D" doðru yazým
+        playerRB = GetComponent<Rigidbody2D>();
+        playerAnimator = GetComponent<Animator>(); // "playerAnimator" yerine "Animator" doðru yazým
     }
 
     // Update is called once per frame
     void Update()
     {
-        playerRB.velocity = new Vector2(Input.GetAxis("Horizontal") * moveSpeed, playerRB.velocity.y); // Parantezlerin düzenlenmesi
+        HorizontalMove();
+        if (playerRB.velocity.x < 0 && facingRight)
+        {
+            FlipFace();
+        }
+        else if (playerRB.velocity.x > 0 && !facingRight)
+        {
+            FlipFace();
+        }
     }
 
     void FixedUpdate()
@@ -27,6 +38,15 @@ public class PlayerController : MonoBehaviour
 
     void HorizontalMove()
     {
-        // Bu metodun içinde henüz bir þey yapýlmamýþ, gereksiz gibi görünüyor.
+        playerRB.velocity = new Vector2(Input.GetAxis("Horizontal") * moveSpeed, playerRB.velocity.y);
+        playerAnimator.SetFloat("playerSpeed", Mathf.Abs(playerRB.velocity.x)); // "setFloat" doðru yazým
+    }
+
+    void FlipFace()
+    {
+        facingRight = !facingRight;
+        Vector3 tempLocalScale = transform.localScale;
+        tempLocalScale.x *= -1;
+        transform.localScale = tempLocalScale;
     }
 }
