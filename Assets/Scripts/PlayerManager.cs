@@ -6,16 +6,25 @@ public class PlayerManager : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    public float helth;
-    bool dead = false; 
+    public float helth,bulletSpeed;
+    bool dead = false;
+    Transform muzzle;
+    public Transform bullet;
+
+
+
     void Start()
     {
-        
+        muzzle = transform.GetChild(1);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetMouseButtonDown(0))
+        {
+            ShootBullet();
+        }
         
     }
 
@@ -39,5 +48,13 @@ public class PlayerManager : MonoBehaviour
         {
             dead = true;
         }
+    }
+
+   public void ShootBullet()
+    {
+        Transform tempBullet; 
+       tempBullet =  Instantiate(bullet,muzzle.position,Quaternion.identity);
+        tempBullet.GetComponent<Rigidbody2D>().AddForce(muzzle.forward * bulletSpeed);
+
     }
 }
