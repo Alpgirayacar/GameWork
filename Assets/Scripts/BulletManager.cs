@@ -4,18 +4,16 @@ using UnityEngine;
 
 public class BulletManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-
     public float bulletDamage, lifeTime;
 
     void Start()
     {
-        
+        Destroy(gameObject, lifeTime);  // Corrected the variable name to 'lifeTime'
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        // Code for updating the bullet if needed
     }
 }

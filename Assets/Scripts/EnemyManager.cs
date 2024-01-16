@@ -25,6 +25,11 @@ public class EnemyManager : MonoBehaviour
             colliderBusy = true;
             collision.GetComponent<PlayerManager>().GetDamage(damage);
         }
+        else if (collision.tag == "Bullet")
+        {
+            GetDamage(collision.GetComponent<BulletManager>().bulletDamage);
+            Destroy(collision.gameObject);
+        }
     }
 
     // Uncomment this block if needed
@@ -38,6 +43,27 @@ public class EnemyManager : MonoBehaviour
         if (collision.tag == "Player")
         {
             colliderBusy = false;
+        }
+    }
+
+    public void GetDamage(float damage)
+    {
+        if ((health - damage) >= 0)
+        {
+            health -= damage;
+        }
+        else
+        {
+            health = 0;
+        }
+        AmIDead();
+    }
+
+    void AmIDead()
+    {
+        if (health <= 0)
+        {
+            Destroy(gameObject);
         }
     }
 }
