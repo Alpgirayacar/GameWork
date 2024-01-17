@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -11,11 +12,15 @@ public class PlayerManager : MonoBehaviour
     Transform muzzle;
     public Transform bullet,floatingText;
 
+    public Slider slider;
 
 
     void Start()
     {
         muzzle = transform.GetChild(1);
+
+        slider.maxValue = helth;
+        slider.value = helth;
     }
 
     // Update is called once per frame
@@ -27,7 +32,7 @@ public class PlayerManager : MonoBehaviour
         }
         
     }
-
+      
     public void GetDamage(float damage)
     {
         Instantiate(floatingText,transform.position , Quaternion.identity).GetComponent<TextMesh>().text = damage.ToString();
@@ -39,6 +44,7 @@ public class PlayerManager : MonoBehaviour
         {
             helth = 0;
         }
+        slider.value = helth;
         AmIDead();  
 
     }
