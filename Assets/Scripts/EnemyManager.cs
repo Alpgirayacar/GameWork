@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyManager : MonoBehaviour
 {
@@ -8,14 +9,12 @@ public class EnemyManager : MonoBehaviour
     public float damage;
     bool colliderBusy = false;
 
+    public Slider slider;
+
     void Start()
     {
-        // Initialization code can be added here if needed
-    }
-
-    void Update()
-    {
-        // Update code can be added here if needed
+        slider.maxValue = health;
+        slider.value = health;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -31,12 +30,6 @@ public class EnemyManager : MonoBehaviour
             Destroy(collision.gameObject);
         }
     }
-
-    // Uncomment this block if needed
-    //private void OnTriggerStay2D(Collider2D collision)
-    //{
-    //    // Code to be executed while the collider is staying in the trigger area
-    //}
 
     private void OnTriggerExit2D(Collider2D collision)
     {
@@ -56,6 +49,7 @@ public class EnemyManager : MonoBehaviour
         {
             health = 0;
         }
+        slider.value = health;
         AmIDead();
     }
 
