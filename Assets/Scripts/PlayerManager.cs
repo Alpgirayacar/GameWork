@@ -9,7 +9,7 @@ public class PlayerManager : MonoBehaviour
     public float helth,bulletSpeed;
     bool dead = false;
     Transform muzzle;
-    public Transform bullet;
+    public Transform bullet,floatingText;
 
 
 
@@ -30,6 +30,7 @@ public class PlayerManager : MonoBehaviour
 
     public void GetDamage(float damage)
     {
+        Instantiate(floatingText,transform.position , Quaternion.identity).GetComponent<TextMesh>().text = damage.ToString();
         if((helth - damage) >=0 )
         {
             helth -= damage;
