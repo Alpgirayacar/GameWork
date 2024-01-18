@@ -11,13 +11,14 @@ public class MenuManagerInGame : MonoBehaviour
 
     void Start()
     {
+
         
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+       
     }
 
     public void PauseButton()
@@ -25,6 +26,7 @@ public class MenuManagerInGame : MonoBehaviour
         Time.timeScale = 0;
         inGameScreen.SetActive(false);  
         pauseScreen.SetActive(true);
+
     }
 
     public void PlayButton()
