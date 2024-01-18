@@ -59,8 +59,25 @@ public class DataManager : MonoBehaviour
         {
             enemyKilled = value;
             GameObject.Find("EnemyKilledText").GetComponent<Text>().text = "Enemy Killed :" + enemyKilled.ToString();
+            WinProcess();
 
+        }
+    }
 
+    public void WinProcess()
+    {
+        if(enemyKilled >=2)
+        {
+            print("Win");
+        }
+       
+    }
+
+    public void LoseProcess()
+    {
+        if (enemyKilled >= 2)
+        {
+            print("Lose");
         }
     }
 

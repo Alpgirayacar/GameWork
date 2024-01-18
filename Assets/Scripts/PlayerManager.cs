@@ -58,6 +58,7 @@ public class PlayerManager : MonoBehaviour
     {
         if(helth <= 0)
         {
+            DataManager.Instance.LoseProcess();
             dead = true;
         }
     }
