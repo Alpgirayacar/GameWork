@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 
 public class DataManager : MonoBehaviour
 {
@@ -11,9 +13,10 @@ public class DataManager : MonoBehaviour
     private int shotBullet;
     public int totalShotBullet;
     private int enemyKilled;
-    public int totalEnemyKilled;   
+    public int totalEnemyKilled;
+    public GameObject inGameScreen, pauseScreen;
 
-    
+
     void Awake()
     {
         if (Instance == null)
@@ -64,11 +67,23 @@ public class DataManager : MonoBehaviour
         }
     }
 
+   
+
     public void WinProcess()
     {
         if(enemyKilled >=2)
         {
             print("Win");
+
+            GameObject.Find("WinText").GetComponent<Text>().text = "   Win!!\r\nKAzandýnýz!! :";
+
+            
+
+
+
+            Time.timeScale = 1;
+            SceneManager.LoadScene(0);
+
         }
        
     }
@@ -79,6 +94,15 @@ public class DataManager : MonoBehaviour
         {
             print("Lose");
         }
+    }
+
+    public void QuitGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 
 }

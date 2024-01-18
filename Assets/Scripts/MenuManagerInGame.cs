@@ -11,7 +11,6 @@ public class MenuManagerInGame : MonoBehaviour
 
     void Start()
     {
-
         
     }
 
